@@ -34,3 +34,19 @@ export const logIn = async (req, res, next) => {
   });
   res.send({ user, token });
 };
+
+export const verifyToken = async (req, res, next) => {
+  try {
+    const token = req.get("Authorization").replace("Bearer ", "");
+    const data = jwt.verify(token, process.env.TOKEN_SECRET);
+    req.userId = data.userId;
+    next();
+  } catch (error) {
+    res.status(401).send("invalid token");
+  }
+};
+
+export const getProfile = async (req, res, next) => {
+  const user = await UserModel.findById(req.userId);
+  res.send(user);
+};
