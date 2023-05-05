@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "nodemon -r dotenv/config -e js ./server.js"
   },
   "repository": {
     "type": "git",
@@ -20,12 +20,14 @@
   "homepage": "https://github.com/McNoHam14/capstone-be#readme",
   "dependencies": {
     "cors": "^2.8.5",
-    "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.0",
-    "mongoose": "^7.0.5"
+    "mongoose": "^7.0.5",
+    "passport": "^0.6.0",
+    "passport-google-oauth20": "^2.0.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.22"
+    "nodemon": "^2.0.22",
+    "dotenv": "^16.0.3"
   }
 }
