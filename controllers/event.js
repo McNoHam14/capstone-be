@@ -17,19 +17,20 @@ export const createEvent = async (req, res, next) => {
 
 export const searchEvent = async (req, res) => {
   const query = {};
-  if (req.body.category) {
-    query.category = req.body.category;
+  console.log("req.body", req.query);
+  if (req.query.category) {
+    query.category = req.query.category;
   }
-  if (req.body.eventType) {
-    query.eventType = req.body.eventType;
+  if (req.query.eventType) {
+    query.eventType = req.query.eventType;
   }
-  if (req.body.eventSubType) {
-    query.eventSubType = req.body.eventSubType;
+  if (req.query.eventSubType) {
+    query.eventSubType = req.query.eventSubType;
   }
 
   EventModel.find(query).then((events, err) => {
     if (err) throw err;
-    console.log(events);
+    // console.log(events);
     res.send(events);
   });
 };

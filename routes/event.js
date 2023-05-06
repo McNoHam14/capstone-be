@@ -6,6 +6,4 @@ export const eventRouter = express.Router();
 
 eventRouter.post("/", verifyToken, createEvent);
 
-eventRouter.post("/", verifyToken, createEvent);
-
 eventRouter.get("/search", searchEvent);
