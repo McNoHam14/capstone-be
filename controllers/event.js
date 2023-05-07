@@ -34,3 +34,10 @@ export const searchEvent = async (req, res) => {
     res.send(events);
   });
 };
+
+export const bookEvent = async (req, res, next) => {
+  const event = await EventModel.findById(req.params.eventId);
+  event.participants.push(req.userId);
+  await event.save();
+  res.send(event);
+};
