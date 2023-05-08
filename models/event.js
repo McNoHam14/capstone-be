@@ -34,6 +34,16 @@ const eventSchema = new Schema({
       ref: "User",
     },
   ],
+
+  booked: {
+    type: Number,
+    // required: true,
+  },
+
+  limit: {
+    type: Number,
+    // required: true,
+  },
 });
 
 export const EventModel = model("Event", eventSchema);

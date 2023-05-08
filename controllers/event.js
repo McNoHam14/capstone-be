@@ -1,7 +1,17 @@
+import mongoose from "mongoose";
 import { EventModel } from "../models/event.js";
 
 export const createEvent = async (req, res, next) => {
-  const { category, eventType, eventSubType, time, location, price } = req.body;
+  const {
+    category,
+    eventType,
+    eventSubType,
+    time,
+    location,
+    price,
+    booked,
+    limit,
+  } = req.body;
   const event = new EventModel({
     category,
     eventType,
@@ -10,6 +20,8 @@ export const createEvent = async (req, res, next) => {
     location,
     price,
     user: req.userId,
+    booked,
+    limit,
   });
   await event.save();
   res.send(event);
@@ -40,4 +52,25 @@ export const bookEvent = async (req, res, next) => {
   event.participants.push(req.userId);
   await event.save();
   res.send(event);
+};
+
+export const findMyEvents = async (req, res, next) => {
+  const { type } = req.query;
+  console.log("type", type);
+  if (type === "my")
+    EventModel.find({
+      user: req.userId,
+    }).then((events, err) => {
+      // if (err) throw err;
+      console.log(events);
+      res.send(events);
+    });
+  else
+    EventModel.find({
+      participants: { $in: [req.userId] },
+    }).then((events, err) => {
+      // if (err) throw err;
+      console.log(events);
+      res.send(events);
+    });
 };
