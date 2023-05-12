@@ -1,6 +1,33 @@
 import express from "express";
-import { logIn, signUp, getProfile, verifyToken } from "../controllers/user.js";
+import {
+  logIn,
+  signUp,
+  getProfile,
+  verifyToken,
+  setPreferences,
+  uploadProfileImage,
+} from "../controllers/user.js";
 import passport from "passport";
+
+import { v2 as cloudinary } from "cloudinary";
+import { CloudinaryStorage } from "multer-storage-cloudinary";
+
+import multer from "multer";
+
+cloudinary.config({
+  api_key: "864812548614261",
+  api_secret: "uTHhFr0aePc8dtMMX7jLqXfOVuw",
+  cloud_name: "dbvkzlgoz",
+});
+
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: "some-folder-name",
+  },
+});
+
+const parser = multer({ storage: storage });
 
 const userRouter = express.Router();
 
@@ -34,6 +61,15 @@ userRouter.get(
       next(error);
     }
   }
+);
+
+userRouter.post("/preferences", verifyToken, setPreferences);
+
+userRouter.post(
+  "/profile-image",
+  verifyToken,
+  parser.single("image"),
+  uploadProfileImage
 );
 
 export default userRouter;

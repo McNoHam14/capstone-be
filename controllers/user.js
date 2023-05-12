@@ -50,3 +50,18 @@ export const getProfile = async (req, res, next) => {
   const user = await UserModel.findById(req.userId);
   res.send(user);
 };
+
+export const setPreferences = async (req, res, next) => {
+  const user = await UserModel.findById(req.userId);
+  user.preferences = req.body.preferences;
+  await user.save();
+  res.send(user);
+};
+
+export const uploadProfileImage = async (req, res, next) => {
+  console.log(req.file);
+  const user = await UserModel.findById(req.userId);
+  user.image = req.file.path;
+  await user.save();
+  res.send(user);
+};

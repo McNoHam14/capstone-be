@@ -7,6 +7,7 @@ import cors from "cors";
 import { eventRouter } from "./routes/event.js";
 import googleStrategy from "./lib/auth/googleOAuth.js";
 import passport from "passport";
+import { categoryRouter } from "./routes/category.js";
 
 const app = express();
 
@@ -20,6 +21,8 @@ app.use(passport.initialize());
 app.use("/users", userRouter);
 
 app.use("/events", eventRouter);
+
+app.use("/admin", categoryRouter);
 
 const startServer = async () => {
   await mongoose.connect(process.env.MONGODB_URI);

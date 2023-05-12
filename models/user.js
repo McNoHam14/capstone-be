@@ -6,6 +6,10 @@ const userSchema = new Schema({
   birthDate: Date,
   email: String,
   password: String,
+  preferences: [
+    { categoryName: String, eventName: String, limit: Number, name: String },
+  ],
+  image: String,
 });
 
 export const UserModel = model("User", userSchema);
