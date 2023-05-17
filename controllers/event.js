@@ -74,3 +74,19 @@ export const findMyEvents = async (req, res, next) => {
       res.send(events);
     });
 };
+
+export const getNearbyEvents = async (req, res, next) => {
+  const { lat, lng } = req.query;
+  const events = await EventModel.find({
+    location: {
+      $near: {
+        $maxDistance: 2500,
+        $geometry: {
+          type: "Point",
+          coordinates: [lng, lat],
+        },
+      },
+    },
+  });
+  res.send(events);
+};

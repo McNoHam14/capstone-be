@@ -46,4 +46,8 @@ const eventSchema = new Schema({
   },
 });
 
+eventSchema.index({
+  location: "2dsphere",
+});
+
 export const EventModel = model("Event", eventSchema);
